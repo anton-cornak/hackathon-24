@@ -16,5 +16,10 @@
 - [Project Gutenberg](https://www.gutenberg.org/)
 - [Chatbot on Azure](https://techcommunity.microsoft.com/blog/fasttrackforazureblog/create-an-azure-openai-langchain-chromadb-and-chainlit-chat-app-in-container-app/3885602)
 
-## Pre-requisites
-- [libmagic](https://formulae.brew.sh/formula/libmagic)
+## Step by step
+- create a simple chatbot with Python
+- load markdown files and create chunks
+- select the embeddings model and create embeddings with Chroma
+- create semantic search
+- create question answering bot
+- create Llama based bot
