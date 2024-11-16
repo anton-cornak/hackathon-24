@@ -4,8 +4,8 @@
 
 ## Commands to know
 
-- `poetry shell`
-- `poetry install --no-root`
+- `poetry shell` - initialize virutal environment, you should always start the terminal with this command
+- `poetry install --no-root` - install all packages as stated in pyproject.toml
 - `poetry add <package>`
 - `poetry remove <package>`
 - `poetry run python main.py`
