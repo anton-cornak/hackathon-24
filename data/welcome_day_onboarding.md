@@ -1,11 +1,13 @@
+# Welcome day onboarding 
+
 Tvoj onboarding sa začína prvým dňom vo Visme. Sprevádzať ním, ťa bude okrem tvojho priameho nadriadeného aj HR tím.
 
-1.Welcome prezentácia a Visma onboarding
+### Welcome prezentácia a Visma onboarding
 Prezentáciu, ktorú si videl počas Welcome day nájdeš 👉 [TU](https://docs.google.com/presentation/d/1wdVhWGoq3oVe4ODCelcdfCaKm9V76lMtnqVHaCvm84c/edit#slide=id.g4610c63111_1_154).
 
 Ďalšie užitočné onboarding informácie nájdeš aj na 👉[stránke Vismy](https://sites.google.com/visma.com/starthere/welcome?authuser=0).
 
-2.Na čo by si nemal zabudnúť počas prvého dňa vo Visme:
+### Na čo by si nemal zabudnúť počas prvého dňa vo Visme:
 Skrášli si pracovné prostredie
 
 Vybaľ si počítače a prispôsob si pracovné prostredie.
