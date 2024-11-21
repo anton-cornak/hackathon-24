@@ -4,10 +4,10 @@ from pydantic import BaseModel
 import assistant
 import auth
 
-app = FastAPI()
+api = FastAPI()
 
 
-@app.get("/")
+@api.get("/")
 def hello_world():
     return {"message": "Hello, World!"}
 
@@ -15,6 +15,6 @@ def hello_world():
 class Question(BaseModel):
     question: str
 
-@app.post("/assistant", dependencies=[Depends(auth.verify_api_key)])
+@api.post("/assistant", dependencies=[Depends(auth.verify_api_key)])
 def ask_assistant(question: Question):
     return assistant.ask(question.question)
