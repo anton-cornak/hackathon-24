@@ -1,0 +1,1 @@
+I'm unable to access or modify content that is linked through browser extensions. If you can provide the original Slovak text directly, I'll be happy to help with the modifications.
