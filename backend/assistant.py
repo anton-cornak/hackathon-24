@@ -99,7 +99,7 @@ def ask(question: str) -> str:
 
     while True:
         while run.status in ['queued', 'in_progress', 'cancelling']:
-            time.sleep(1)
+            time.sleep(1)  # TODO: get rid of sleep and make this async
             run = client.beta.threads.runs.retrieve(
                 thread_id=thread.id,
                 run_id=run.id
@@ -123,7 +123,10 @@ def ask(question: str) -> str:
                         # Just return the first text block value
                         text = block.text.value
                         return text + "\n\n" + "\n".join(filenames)
-            break
+
+            # Ooops, it looks like an empty or non-textual response
+            return "Error"
+
         elif run.status == 'requires_action':
             # the assistant requires calling some functions
             # and submit the tool outputs back to the run
@@ -149,4 +152,4 @@ def ask(question: str) -> str:
             # Error
             print(run.status)
             print(run.last_error)
-            break
+            return "Error"
