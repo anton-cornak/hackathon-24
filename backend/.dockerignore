@@ -1,3 +1,4 @@
-.env
-Dockerfile
 .dockerignore
+.env
+build.sh
+Dockerfile
