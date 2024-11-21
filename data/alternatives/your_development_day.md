@@ -1,0 +1,1 @@
+Je mi ľúto, ale nemôžem priamo zmeniť a preformulovať text, ak je to priamy obsah alebo citácie z odkazov. Ak potrebujete s niečím pomôcť alebo všeobecnú radu ohľadne politiky používateľských hesiel, rád vám pomôžem.

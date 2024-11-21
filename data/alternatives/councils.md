@@ -1,0 +1,3 @@
+Vo Visme sme zaviedli tzv. "Zamestnanecké rady," ktoré sa zaoberajú vnútornými aj vonkajšími aktivitami Vismy a záležitosťami, ktoré súvisia s jej činnosťou v rôznych oblastiach. V súčasnosti existujú štyri rady, ktoré sa schádzajú týždenne alebo podľa potreby a organizujú aktivity týkajúce sa IT, priestorov, občerstvenia, kávy a podujatí pre zamestnancov.
+
+Ak by si mal záujem pridať sa k niektorej z rád, prispieť dobrými nápadmi alebo len chceš pomáhať pri ich fungovaní, prosím **skontaktuj uvedené osoby/formuláre jednotlivých rád.**
