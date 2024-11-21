@@ -16,8 +16,8 @@ class Preprocess:
         data_path: str,
         db_path: str,
         embeddings_model: str,
-        chunk_size: int = 500,
-        chunk_overlap: int = 100,
+        chunk_size: int = 1000,
+        chunk_overlap: int = 200,
     ):
         self.db_path = db_path
         self.embeddings_model = HuggingFaceEmbeddings(model_name=embeddings_model)

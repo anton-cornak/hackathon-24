@@ -13,7 +13,7 @@ def chat():
     embeddings_model = "paraphrase-multilingual-MiniLM-L12-v2"
 
     preprocess = Preprocess(
-        data_path="data",
+        data_path="idellaData",
         db_path="chroma",
         embeddings_model=embeddings_model,
     )
@@ -39,6 +39,7 @@ def chat():
             break
         else:
             results = semantic_search.search(user_input, top_k=3)
+            print(f"Results: {results}")
             qa_res = chatbot.qa_answer_question(user_input, results)
             # text_gen_res = chatbot.text_gen_question(user_input, results)
             print(f"QA Bot: {qa_res}")
