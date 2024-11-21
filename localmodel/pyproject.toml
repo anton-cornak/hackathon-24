@@ -7,13 +7,13 @@ readme = "README.md"
 
 [tool.poetry.dependencies]
 python = ">=3.11,<3.13"
+transformers = "^4.46.2"
 langchain-community = "^0.3.7"
 langchain-huggingface = "^0.1.2"
 unstructured = {extras = ["md"], version = "^0.16.5"}
 langchain-chroma = "^0.1.4"
 libmagic = "^1.0"
 langchain = "^0.3.7"
-transformers = "^4.46.3"
 
 [build-system]
 requires = ["poetry-core"]
