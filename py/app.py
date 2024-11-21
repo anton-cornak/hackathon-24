@@ -21,7 +21,9 @@ def handle_message_events(body, logger):
     text = event.get("text", "")
     user = event.get("user", "")
     channel = event.get("channel", "")
-    app.client.chat_postMessage(channel=channel, text=f"You said: {text}")
+    thread_ts = str(event.get("thread_ts", event.get("ts")))
+
+    app.client.chat_postMessage(channel=channel, text=f"You said: {text}", thread_ts=thread_ts)
 
 @app.command("/hi")
 def handle_hello_command(ack, respond, command):
