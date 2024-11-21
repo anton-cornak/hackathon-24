@@ -5,7 +5,7 @@ from pathlib import Path
 from openai import OpenAI
 
 # Set your OpenAI API key
-api_key = os.environ['OPENAI_API_KEY']
+api_key = os.environ.get('OPENAI_API_KEY')
 # Define directories
 base_dir = Path("./data")
 alt_dir = base_dir / "alternatives"
@@ -42,21 +42,23 @@ def process_files():
     print("Iterate over files...")
     # Iterate over files in base directory
     for file in base_dir.iterdir():
-        if file.is_file():  # Process only files
+        if file.is_file() and "alternative" not in file.name and "DS_Store" not in file.name:  # Process only files
             with open(file, 'r', encoding='utf-8') as f:
                 content = f.read()
 
-            # Generate alternative text
-            try:
-                alternative_text = generate_alternatives(content)
-            except Exception as e:
-                print(f"Error processing file {file.name}: {e}")
-                continue
-
-            # Save the alternative content into the 'alternatives' subdirectory
             alt_file_path = alt_dir / file.name
-            with open(alt_file_path, 'w', encoding='utf-8') as f:
-                f.write(alternative_text)
+            if not os.path.isfile(alt_file_path):
+                # Generate alternative text
+                try:
+                    alternative_text = generate_alternatives(content)
+                except Exception as e:
+                    print(f"Error processing file {file.name}: {e}")
+                    continue
+
+                # Save the alternative content into the 'alternatives' subdirectory
+
+                with open(alt_file_path, 'w', encoding='utf-8') as f:
+                    f.write(alternative_text)
 
     print(f"Alternative files saved in {alt_dir}")
 
