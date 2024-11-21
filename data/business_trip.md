@@ -90,4 +90,3 @@ Pri vyúčtovávaní bločkov zo zahraničia by sme ťa chceli zvlášť upozorn
 Po vyúčtovaní Ti budú vyplatené diéty a preplatené náklady, ktoré si si vyúčtoval (PREPITNÉ NEPREPLÁCAME)
 
 V prípade otázok, či problémov s vyúčtovaním prosím kontaktuj Marian Gaal, Alexandra Prusákova
-
