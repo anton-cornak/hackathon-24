@@ -68,10 +68,6 @@ assistant = client.beta.assistants.update(
     tools=new_tools
 )
 
-vector_store_id = assistant.tool_resources.file_search.vector_store_ids[0]
-
-vector_store = client.beta.vector_stores.retrieve(vector_store_id)
-
 tools = {
     "booking-get_available_seats": booking.get_available_seats,
     "booking-book_on_floor": booking.book_on_floor

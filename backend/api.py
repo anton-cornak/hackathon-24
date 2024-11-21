@@ -15,6 +15,6 @@ def hello_world():
 class Question(BaseModel):
     question: str
 
-@api.post("/assistant", dependencies=[Depends(auth.verify_api_key)])
-def ask_assistant(question: Question):
+@api.post("/assistant", dependencies=[Depends(auth.verify_api_key)], response_model=str)
+def ask_assistant(question: Question) -> str:
     return assistant.ask(question.question)
