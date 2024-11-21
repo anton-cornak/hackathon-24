@@ -1,3 +1,4 @@
+import json
 import os
 import time
 from openai import AzureOpenAI
@@ -5,6 +6,8 @@ from openai import AzureOpenAI
 from dotenv import load_dotenv
 from openai.pagination import SyncCursorPage
 from openai.types.beta.threads import Message
+
+import booking.mock as booking
 
 load_dotenv()
 
@@ -14,75 +17,74 @@ client = AzureOpenAI(
     api_version="2024-05-01-preview"
 )
 
-# assistant = client.beta.assistants.create(
-#   model="gpt-4o", # replace with model deployment name.
-#   instructions="",
-#   tools=[{"type":"function","function":{"name":"get_weather","description":"Determine weather in my location","parameters":{"type":"object","properties":{"location":{"type":"string","description":"The city and state e.g. Seattle, WA"},"unit":{"type":"string","enum":["c","f"]}},"required":["location"]},"strict":False}}],
-#   tool_resources={},
-#   temperature=1,
-#   top_p=1
-# )
-#
-# print(f"Assistant created: {assistant}")
-
 assistant_id = os.getenv("ASSISTANT_ID")
 
 # Define new tools
 new_tools = [
     {
-        "type": "function",
-        "function": {
-            "name": "get_weather",
-            "description": "Determine weather in my location",
-            "parameters": {
-                "type": "object",
-                "properties": {
-                    "location": {
-                        "type": "string",
-                        "description": "The city and state e.g. Seattle, WA"
-                    },
-                    "unit": {
-                        "type": "string",
-                        "enum": ["c", "f"]
-                    }
-                },
-                "required": ["location"]
-            },
-            "strict": False
-        }
-    }
+        "type": "file_search", "file_search": {"ranking_options": {"ranker": "default_2024_08_21", "score_threshold": 0}}
+    },
+    # {
+    #     "type": "function",
+    #     "function": {
+    #         "name": "booking-get_available_seats",
+    #         "description": "Vyhladaj volne miesta na sedenie",
+    #         "parameters": {
+    #             "type": "object",
+    #             "properties": {
+    #                 "floor_number": {
+    #                     "type": "integer",
+    #                     "description": "Cislo poschodia, napr. 2"
+    #                 }
+    #             },
+    #             "required": ["floor_number"]
+    #         },
+    #         "strict": False
+    #     }
+    # },
+    # {
+    #     "type": "function",
+    #     "function": {
+    #         "name": "booking-book_on_floor",
+    #         "description": "Zarezervuj volne miesto na sedenie",
+    #         "parameters": {
+    #             "type": "object",
+    #             "properties": {
+    #                 "floor_number": {
+    #                     "type": "integer",
+    #                     "description": "Cislo poschodia, napr. 2"
+    #                 }
+    #             },
+    #             "required": ["floor_number"]
+    #         },
+    #         "strict": False
+    #     }
+    # }
 ]
 
-
-def get_weather(location, unit='c'):
-    """
-    Determine weather in a specific location.
-
-    Parameters:
-    location (str): The city and state e.g. Seattle, WA
-    unit (str): The unit of temperature, either 'c' for Celsius or 'f' for Fahrenheit. Default is 'c'.
-
-    Returns:
-    dict: A dictionary containing weather information for the specified location.
-    """
-    # Example implementation (replace with actual API call)
-    weather_data = {
-        "location": location,
-        "temperature": 20,  # Example temperature
-        "unit": unit,
-        "description": "Partly cloudy"
-    }
-    return weather_data
-
-
 # Update the assistant with new tools
-# assistant = client.beta.assistants.update(
-#     assistant_id=assistant_id,
-#     tools=new_tools
-# )
+assistant = client.beta.assistants.update(
+    assistant_id=assistant_id,
+    tools=new_tools
+)
+
+vector_store_id = assistant.tool_resources.file_search.vector_store_ids[0]
+
+vector_store = client.beta.vector_stores.retrieve(vector_store_id)
+
+tools = {
+    "booking-get_available_seats": booking.get_available_seats,
+    "booking-book_on_floor": booking.book_on_floor
+}
+
+def file_name_to_md_link(file_name: str) -> str:
+    # TODO: figure this out
+    return f"[{file_name}](https://google.com/?q={file_name})"
 
 
 def ask(question: str) -> str:
+    filenames = []
+
     # Create a thread
     thread = client.beta.threads.create()
 
@@ -115,26 +117,38 @@ def ask(question: str) -> str:
             for page in messages:
                 for block in page.content:
                     if block.type == "text":
+                        annotations = block.text.annotations
+                        for annotation in annotations:
+                            if annotation.type == "file_citation":
+                                file_id = annotation.file_citation.file_id
+                                file = client.files.retrieve(file_id)
+                                filenames.append(file_name_to_md_link(file.filename))
+
                         # Just return the first text block value
-                        return block.text.value
+                        text = block.text.value
+                        return text + "\n\n" + "\n".join(filenames)
             break
         elif run.status == 'requires_action':
             # the assistant requires calling some functions
             # and submit the tool outputs back to the run
             for tool in run.required_action.submit_tool_outputs.tool_calls:
-                # get data from the weather function
-                if tool.function.name == "get_weather":
-                    weather = get_weather("Kosice", "c")
+                function_name = tool.function.name
+                if function_name in tools:
+                    function = tools[function_name]
+                    args = json.loads(tool.function.arguments)
+
+                    result = function(**args)
+                    output = json.dumps(result, default=lambda x: x.__dict__)
+                    print(output)
 
                     run = client.beta.threads.runs.submit_tool_outputs_and_poll(
                         thread_id=thread.id,
                         run_id=run.id,
                         tool_outputs=[{
                             "tool_call_id": tool.id,
-                            "output": str(weather)
+                            "output": output
                         }]
                     )
-
         else:
             # Error
             print(run.status)
