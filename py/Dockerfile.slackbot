@@ -1,0 +1,26 @@
+# Use the official Python image from the Docker Hub
+FROM python:3.12-slim
+
+# Set environment variables
+ENV POETRY_VERSION=1.5.1
+
+# Install Poetry
+RUN pip install "poetry==$POETRY_VERSION"
+
+# Set the working directory
+WORKDIR /app
+
+# Copy the pyproject.toml and poetry.lock files
+COPY pyproject.toml poetry.lock ./
+
+# Install the dependencies
+RUN poetry install --no-root --no-dev
+
+# Copy the rest of the application code
+COPY . .
+
+# Expose the port FastAPI will run on
+EXPOSE 8000
+
+# Run the application
+CMD ["poetry", "run", "python", "main.py"]

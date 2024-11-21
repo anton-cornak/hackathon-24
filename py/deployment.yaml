@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: slackbot-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: slackbot
+  template:
+    metadata:
+      labels:
+        app: slackbot
+    spec:
+      containers:
+      - name: slackbot
+        image: eu.gcr.io/snbx-vml-vcdm/hackathon-slackbot:latest
+        ports:
+        - containerPort: 8000
+        env:
+        - name: SLACK_BOT_TOKEN
+          value: xoxb-8056227776918-8065526327268-ap0P1tEjjn2Vt578btigzaBi
+        - name: SLACK_SIGNING_SECRET
+          value: f0c8c6b1c5c6523ec385bcb085870895
+        - name: SLACK_APP_TOKEN
+          value: xapp-1-A081EDWC347-8056627847734-f97307f80cbca6e03f0d0c14cb11b116d8ea4feffe2243f83f7c5d016cd563f0
+        - name: API_TOKEN
+          value: 284f64b1-e6a1-4089-8745-46928e2b9abd
