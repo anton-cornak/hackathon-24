@@ -1,0 +1,3 @@
+Vo Visme sme vytvorili tzv. "Rady zamestnancov" ktoré sa venujú interným aj externým aktivitám Vismy a veciam, ktoré súvisia s jej fungovaním v rôznych smerom. V súčasnosti fungujú 4 rady, ktoré sa stretávajú raz za týždeň /podľa potreby a rozhodujú/ vykonávajú aktivity v súvislosti s IT, priestormi, občerstvením, kávov pri a eventami organizovanými pre zamestnancov.
+
+Ak by si sa rád stal členom niektorej z rád, prispel dobrými nápadmi alebo jednoducho máš chuť podieľať sa na fungovaní, prosím **kontaktuj nižšie uvedené osoby/ formuláre jednotlivých rád.**
