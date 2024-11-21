@@ -14,7 +14,7 @@ app.message('hello', async ({ message, say }) => {
 });
 
 // When a user joins the team, send a message in a predefined channel asking them to introduce themselves
-app.event('channel_left', async ({ event, client, logger }) => {
+app.event('member_left_channel', async ({ event, client, logger }) => {
     try {
         // Call chat.postMessage with the built-in client
         const result = await client.chat.postMessage({
@@ -28,7 +28,7 @@ app.event('channel_left', async ({ event, client, logger }) => {
     }
 });
 
-app.event('channel_joined', async ({ event, client, logger }) => {
+app.event('member_joined_channel', async ({ event, client, logger }) => {
     try {
         // Call chat.postMessage with the built-in client
         const result = await client.chat.postMessage({
