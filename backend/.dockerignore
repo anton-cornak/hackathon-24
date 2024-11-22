@@ -1,0 +1,4 @@
+.dockerignore
+.env
+build_push.sh
+Dockerfile
